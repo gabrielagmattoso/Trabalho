@@ -80,19 +80,12 @@ Lista, dicionário, tupla e classe.
 ## Estrutura do Projeto
 
 ```
-bolo-da-lara/
-├── assets/
-│   ├── images/
-│   ├── sounds/
-│   └── fonts/
-├── data/
-│   └── recipe.json
-├── src/
-│   ├── scenes/
-│   ├── managers/
-│   └── components/
+Trabalho/
 ├── main.py
-├── requirements.txt
+├── testes/
+│   └── test_jogo.py
+├── docs/
+│   └── proposta.md
 └── README.md
 ```
 
@@ -101,13 +94,21 @@ bolo-da-lara/
 ## Como Executar
 
 ```bash
-git clone https://github.com/seu-usuario/bolo-da-lara.git
-cd bolo-da-lara
-pip install -r requirements.txt
+git clone https://github.com/gabrielagmattoso/Trabalho.git
+cd Trabalho
+pip install pygame
 python main.py
 ```
 
 Requisitos: Python 3.10+ e Pygame 2.x
+
+---
+
+## Como Executar os Testes
+
+```bash
+python testes/test_jogo.py
+```
 
 ---
 
