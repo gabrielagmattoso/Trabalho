@@ -107,7 +107,7 @@ Requisitos: Python 3.10+ e Pygame 2.x
 ## Como Executar os Testes
 
 ```bash
-python testes/test_jogo.py
+python testesdeverificacao
 ```
 
 ---
