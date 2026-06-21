@@ -1,98 +1,41 @@
 # Bolo da Lara
+Projeto final da disciplina de Introdução a Algoritmos/Programação, desenvolvido com Python e Pygame.
 
-Jogo de cliques interativo desenvolvido com Python e Pygame, inspirado no Sara's Red Velvet Cake (Friv Jogos).
-
----
-
-## Equipe
-
+## Integrantes do grupo
 - Gabriela Gomes Mattoso
 - Livia Hilbert de Oliveira
 - Isabella Oliveira Araújo Barbosa Moreira
 - Giovanna Brito Silva Ribeiro
 
----
+## Estrutura do projeto
+- `main.py`: ponto de entrada da aplicação.
+- `testesdeverificacao`: testes do jogo.
+- `docs/proposta.md`: proposta inicial do projeto.
+- `recordes_bolo_lara.json`: arquivo gerado automaticamente ao salvar um recorde (não é necessário incluir no repositório).
 
-## Sobre o Jogo
+## Descrição do jogo
+Bolo da Lara é um jogo de cliques rápidos em que o jogador segue uma receita de bolo passo a passo, guiado pelo personagem Lara. O jogador deve selecionar ingredientes, misturar a massa, assar e decorar o bolo na ordem correta. A pontuação final depende da precisão e da velocidade em cada etapa.
 
-Bolo da Lara é um jogo de cliques rápidos em que o jogador segue uma receita de bolo passo a passo. A receita aparece na tela e o jogador deve clicar nos ingredientes certos, na ordem certa, para preparar o bolo corretamente.
+## Objetivo do jogador
+Completar as 4 etapas da receita — selecionar ingredientes, misturar, assar e decorar — da forma mais eficiente possível, acumulando o máximo de pontos e conquistando 5 estrelas ao final.
 
-O jogo é dividido em 4 etapas: selecionar ingredientes, misturar, assar e decorar.
+## Regras do jogo
+- Seguir a receita na ordem correta.
+- O jogo é dividido em 4 etapas: ingredientes, misturar, assar e decorar.
+- Não é possível avançar de etapa sem concluir a anterior.
+- Clicar em um ingrediente errado desconta 40 pontos.
+- Cada etapa tem um timer; esgotar o tempo desconta 50 pontos.
+- Elementos ainda não desbloqueados não respondem à interação.
+- Erros não encerram o jogo — apenas reduzem a pontuação.
+- No final, a pontuação é exibida com estrelas (0 a 5) e uma frase personalizada da Lara.
 
----
+## Controles
+- **Mouse**: único controle do jogo.
+  - Arrastar: mover ingredientes e a massa para o forno.
+  - Girar o mouse dentro da tigela: misturar a massa.
+  - Clicar: selecionar decorações, confirmar ações e navegar pelos menus.
 
-## Objetivo
-
-Interagir com o ambiente — ingredientes, utensílios e eletrodomésticos — no momento correto, seguindo os passos da receita, buscando atingir a pontuação máxima através da eficiência.
-
----
-
-## Regras
-
-- Seguir a receita na ordem correta
-- Controle exclusivamente pelo mouse
-- Não é possível avançar de etapa sem concluir a anterior
-- Elementos bloqueados não respondem a cliques
-- Elementos decorativos do ambiente não são interativos
-- Clicar no ingrediente errado desconta pontos
-- Cada etapa possui um número limitado de tentativas; após atingir o limite de erros, o jogador recebe a pontuação mínima da fase
-- Erros não encerram o jogo
-
----
-
-## Sistema de Pontuação
-
-A cada etapa, uma quantidade de pontos equivalente à eficiência do jogador é somada ao total. A tela final exibe a pontuação em estrelas, proporcional à porcentagem de acertos, com frases personalizadas da Lara: "Você foi incrível!", "Quase lá!" ou "Da próxima consegue!". Combos de acertos consecutivos concedem bônus.
-
----
-
-## Elementos do Jogo
-
-**Visuais:** interface gráfica por etapa, fundo que muda conforme a etapa atual, sombras para distinguir itens clicáveis dos decorativos e card visual da receita com destaque no passo atual.
-
-**Interativos:** barra de progresso, área de mistura dos ingredientes e timer visual do forno.
-
-**Sonoros:** trilha de fundo por etapa, feedback sonoro de acerto/erro e efeitos de cozinha como som da batedeira.
-
-**Narrativa:** personagem Lara guia o jogador durante toda a experiência, com tela de introdução e falas com instruções e reações à pontuação.
-
-**Acessibilidade:** botão de pause sem perder o estado atual, tela de "Como Jogar" e dicas visuais.
-
-**Técnicos:** gerenciador de cena, gerenciador de áudio, sistema de carregamento de assets e controle de FPS.
-
----
-
-## Estrutura de Dados
-
-Lista, dicionário, tupla e classe.
-
----
-
-## Assets
-
-- Imagens: `.png`
-- Áudio: `.mp3` / `.wav`
-- Dados / Receita: `.json`
-- Fontes: `.ttf`
-
----
-
-## Estrutura do Projeto
-
-```
-Trabalho/
-├── main.py
-├── testes/
-│   └── test_jogo.py
-├── docs/
-│   └── proposta.md
-└── README.md
-```
-
----
-
-## Como Executar
-
+## Como executar o projeto
 ```bash
 git clone https://github.com/gabrielagmattoso/Trabalho.git
 cd Trabalho
@@ -100,51 +43,18 @@ pip install pygame
 python main.py
 ```
 
-Requisitos: Python 3.10+ e Pygame 2.x
-
----
-
-## Como Executar os Testes
-
+## Como executar os testes
 ```bash
 python testesdeverificacao
 ```
 
----
+## Testes implementados
+- Clique nos ingredientes: verifica se o desconto de pontos ocorre corretamente ao errar o ingrediente.
+- Ordem das etapas: verifica se o jogo impede avançar sem concluir a etapa anterior.
+- Bloqueio de elementos: confirma que elementos não desbloqueados não respondem à interação.
+- Sistema de pontuação: valida soma de pontos, desconto por erro e cálculo de estrelas.
+- Limite de tentativas: verifica a pontuação mínima após esgotar tentativas.
+- Troca de cena: valida a transição correta entre as 4 etapas.
+- Encerramento: verifica se a tela final exibe corretamente pontuação, estrelas e frase da Lara.
+- Pausa: confirma que o pause interrompe o jogo sem perder o estado atual.
 
-## Testes Planejados
-
-- Clique nos ingredientes: verificar se o clique do mouse está sendo detectado corretamente na área do ingrediente certo e do errado, confirmando o desconto de pontos no caso de erro.
-- Ordem das etapas: verificar se o jogo impede o jogador de avançar sem ter concluído a anterior.
-- Bloqueio de elementos: confirmar que elementos não desbloqueados não respondem à interação do jogador.
-- Sistema de pontuação: validar se os pontos são somados corretamente a cada acerto e descontados a cada erro, e se as estrelas finais refletem a porcentagem correta.
-- Limite de tentativas: verificar se, após atingir o número máximo de erros em uma etapa, o jogador recebe a pontuação mínima daquela fase.
-- Troca de cena: validar se o gerenciador de cena transita corretamente entre as 4 etapas e se o fundo muda conforme esperado.
-- Encerramento: verificar se, ao concluir a última etapa, a tela final exibe corretamente a pontuação, as estrelas e a frase da Lara.
-- Pausa: confirmar se o botão de pause interrompe o jogo sem perder o estado atual.
-
----
-
-## Escopo Mínimo — Entrega Final
-
-- Tela inicial com botão de início e tela de "Como Jogar"
-- Pelo menos 2 das 4 etapas funcionais (selecionar ingredientes e misturar)
-- Sistema de clique com validação de certo/errado
-- Sistema de pontuação com desconto por erro e exibição de estrelas
-- Bloqueio de elementos não desbloqueados
-- Tela final com pontuação, estrelas e frase da Lara
-- Carregamento de assets via `.png` e `.mp3` / `.wav`
-- Controle exclusivo pelo mouse em todas as interações
-
----
-
-## Principais Dificuldades Esperadas
-
-- Design e organização da interface gráfica
-- Inexperiência com desenvolvimento de jogos em Pygame
-- Implementação de gerenciadores de cena e áudio
-- Coordenação da lógica de estados entre etapas
-
----
-
-Projeto desenvolvido como trabalho acadêmico — Python com Pygame.
