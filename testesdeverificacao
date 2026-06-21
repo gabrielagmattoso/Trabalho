@@ -1,0 +1,171 @@
+
+import sys
+import os
+import json
+import tempfile
+
+
+PENALIDADE_ERRO  = 40
+PENALIDADE_TEMPO = 50
+PONTOS_MAXIMOS   = 850
+
+FASES = [
+    {"nome": "ingredientes", "pontos": 100, "tempo": 9.0,  "bonus": 80},
+    {"nome": "misturar",     "pontos": 150, "tempo": 10.0, "bonus": 60},
+    {"nome": "assar",        "pontos": 150, "tempo": 10.0, "bonus": 70},
+    {"nome": "decorar",      "pontos": 200, "tempo": 5.0,  "bonus": 40},
+]
+
+ARQUIVO_RECORDES = "recordes_bolo_lara.json"
+
+def calcular_estrelas(pontuacao):
+    pct = min(100, int(pontuacao / PONTOS_MAXIMOS * 100))
+    return min(5, round(pct / 20))
+
+def calcular_bonus(bonus_maximo, tempo_restante, tempo_total):
+    return int(bonus_maximo * (tempo_restante / tempo_total))
+
+def aplicar_penalidade(pontuacao):
+    return max(0, pontuacao - PENALIDADE_ERRO)
+
+def calcular_mensagem(pct):
+    if pct >= 90:   return "INCRÍVEL! Mestre da confeitaria! 🏆"
+    elif pct >= 70: return "Muito Bem! Bolo perfeito! 🎉"
+    elif pct >= 50: return "Quase lá! Próximo vai! 👍"
+    elif pct >= 30: return "Continue praticando! 😄"
+    else:           return "Não desista! 💪"
+
+def salvar_recorde(caminho, nome, pontuacao, estrelas):
+    lista = []
+    if os.path.exists(caminho):
+        with open(caminho) as f:
+            lista = json.load(f)
+    lista.append({"nome": nome, "pontuacao": pontuacao, "estrelas": estrelas})
+    lista.sort(key=lambda x: x["pontuacao"], reverse=True)
+    lista = lista[:10]
+    with open(caminho, "w") as f:
+        json.dump(lista, f)
+    return lista
+
+
+def test_pontuacao_maxima_5_estrelas():
+    assert calcular_estrelas(850) == 5
+
+def test_pontuacao_zero_0_estrelas():
+    assert calcular_estrelas(0) == 0
+
+def test_pontuacao_media_estrelas_corretas():
+    assert calcular_estrelas(425) == 2
+
+def test_penalidade_reduz_pontuacao():
+    assert aplicar_penalidade(200) == 200 - PENALIDADE_ERRO
+
+def test_pontuacao_nao_fica_negativa():
+    assert aplicar_penalidade(10) == 0
+
+def test_penalidades_acumuladas():
+    pts = 500
+    for _ in range(3):
+        pts = aplicar_penalidade(pts)
+    assert pts == 500 - 3 * PENALIDADE_ERRO
+
+
+
+def test_mensagem_incrivel():
+    assert "INCRÍVEL" in calcular_mensagem(95)
+
+def test_mensagem_muito_bem():
+    assert "Muito Bem" in calcular_mensagem(75)
+
+def test_mensagem_quase_la():
+    assert "Quase" in calcular_mensagem(55)
+
+def test_mensagem_continue():
+    assert "Continue" in calcular_mensagem(35)
+
+def test_mensagem_nao_desista():
+    assert "desista" in calcular_mensagem(10)
+
+
+def test_bonus_maximo_com_tempo_cheio():
+    cfg = FASES[1]
+    assert calcular_bonus(cfg["bonus"], cfg["tempo"], cfg["tempo"]) == cfg["bonus"]
+
+def test_bonus_zero_sem_tempo():
+    cfg = FASES[1]
+    assert calcular_bonus(cfg["bonus"], 0, cfg["tempo"]) == 0
+
+def test_bonus_proporcional():
+    cfg = FASES[1]
+    bonus = calcular_bonus(cfg["bonus"], cfg["tempo"] / 2, cfg["tempo"])
+    assert bonus == cfg["bonus"] // 2
+
+
+def test_quatro_fases_definidas():
+    assert len(FASES) == 4
+
+def test_nomes_das_fases():
+    nomes = [f["nome"] for f in FASES]
+    assert nomes == ["ingredientes", "misturar", "assar", "decorar"]
+
+def test_pontuacao_total_maxima():
+    total = sum(f["pontos"] for f in FASES[1:]) + sum(f["bonus"] for f in FASES) + 5 * 20
+    assert total == PONTOS_MAXIMOS
+
+
+def test_salvar_e_carregar_recorde():
+    with tempfile.NamedTemporaryFile(suffix=".json", delete=False, mode="w") as f:
+        f.write("[]")
+        tmp = f.name
+    try:
+        lista = salvar_recorde(tmp, "Tester", 750, 4)
+        assert lista[0]["nome"] == "Tester"
+        assert lista[0]["pontuacao"] == 750
+    finally:
+        os.unlink(tmp)
+
+def test_recordes_ordenados_por_pontuacao():
+    with tempfile.NamedTemporaryFile(suffix=".json", delete=False, mode="w") as f:
+        f.write("[]")
+        tmp = f.name
+    try:
+        salvar_recorde(tmp, "B", 300, 2)
+        salvar_recorde(tmp, "A", 700, 4)
+        lista = salvar_recorde(tmp, "C", 500, 3)
+        pts = [r["pontuacao"] for r in lista]
+        assert pts == sorted(pts, reverse=True)
+    finally:
+        os.unlink(tmp)
+
+def test_maximo_10_recordes():
+    with tempfile.NamedTemporaryFile(suffix=".json", delete=False, mode="w") as f:
+        f.write("[]")
+        tmp = f.name
+    try:
+        lista = []
+        for i in range(15):
+            lista = salvar_recorde(tmp, f"P{i}", i * 50, 1)
+        assert len(lista) <= 10
+    finally:
+        os.unlink(tmp)
+
+
+if __name__ == "__main__":
+    import traceback
+
+    testes = [v for k, v in list(globals().items()) if k.startswith("test_")]
+    total = passou = falhou = 0
+
+    for fn in testes:
+        total += 1
+        try:
+            fn()
+            print(f"certo:{fn.__name__}")
+            passou += 1
+        except Exception:
+            print(f"errado:{fn.__name__}")
+            traceback.print_exc()
+            falhou += 1
+
+    print(f"  Resultado: {passou}/{total} testes passaram, {falhou} falhou(aram)")
+    sys.exit(0 if falhou == 0 else 1)
