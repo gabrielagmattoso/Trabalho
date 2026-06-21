@@ -1,0 +1,88 @@
+Desenvolvimento de um jogo com Python e Pygame.
+
+Integrantes:
+Gabriela Gomes Mattoso
+Livia Hilbert de Oliveira 
+Isabella Oliveira Araújo Barbosa Moreira 
+Giovanna Brito Silva Ribeiro
+
+Nome provisório do jogo:
+Bolo do Lara.
+
+Tipo de jogo:
+Jogo de clique rápido.
+
+Descrição geral:
+Bolo da Lara é um jogo de cliques em que o jogador segue uma receita de bolo passo a passo. A receita aparece na tela e o jogador deve clicar nos ingredientes certos, na ordem certa, para preparar o bolo corretamente. Cada etapa se baseia em: selecionar o ingrediente, misturar, assar e decorar. Caso o jogador erre um passo, haverá uma punição na pontuação e, caso acerte, terá um sistema de pontos que será validado junto a interface mostrando estrelas (que será uma forma de mostrar a porcentagem de acertos). No final, o bolo aparece pronto na tela e quanto mais fiel à receita, mais estrelas o jogador ganha.
+O jogo foi inspirado em Sara 's Red Velvet Cake do friv jogos.
+
+Objetivo do jogador:
+O objetivo principal do jogador é interagir com o ambiente para fazer um bolo. Nesse ambiente terá ingredientes (como: farinha, açúcar, entre outros) também haverá utensílios de cozinha e eletrodomésticos, sendo que todos esses meios poderão ser utilizados no momento certo ( de acordo com os passos da receita) pelo jogador. No final, o jogador tentará atingir o máximo de pontos possíveis, através da sua eficiência ao preparar a receita.
+
+Regras principais:
+Seguir a receita corretamente;
+Executar cada ação de acordo com o que está sendo pedido; 
+O jogo é dividido em 4 etapas; 
+O bolo ficará pronto se tudo for feito na ordem certa;
+Controle só pelo mouse.
+Não é possível interagir com os elementos de decoração do ambiente e com elementos não desbloqueados 
+Erros não encerram o jogo
+Cada etapa tem um número limitado de tentativas, após X erros o jogador receberá a pontuação mínima
+Não é possível avançar de etapa sem ter concluído a anterior 
+Clicar em um ingrediente errado desconta pontos 
+
+Condição de vitória: 
+Como o jogo será pontuado pela manipulação coerente a receita, haverá um placar de pontos, em que, a cada etapa, será somado ao total uma quantidade de pontos equivalente a eficiência do jogador, havendo frases para cada tipo de pontuação, como: “Você foi incrível”, “Da próxima consegue”, “Quase lá” e, também, tendo estrelas para indicar a porcentagem dos pontos do jogador em relação a pontuação máxima.
+Condição de derrota ou encerramento: Já que o jogo se baseia em um sistema de pontuação, a derrota será concedida se o jogador fizer a pontuação mínima possível e a condição de encerramento se dá no final da última etapa, em que, ao terminar a receita seguindo as regras, a pontuação será mostrada com as estrelas que o jogador ganhou.
+
+Elementos previstos: 
+Elementos visuais: a interface gráfica do jogo.
+Elementos interativos: barra de progresso, área de mistura dos ingredientes, timer visual do forno, entre outros.
+Elementos de lógica: sistema de estado do jogo, bloqueio de elementos que ainda não podem ser usados, validação de clique fora da área, registro de tentativas, entre outros.
+Elementos sonoros: feedback sonoro de acerto, trilha de fundo por etapa e efeitos de cozinha( ex: som da batedeira)
+Elementos de acessibilidade: botão de pause, tela de “como jogar”, dicas visuais, entre outros.
+Elementos de narrativa: O personagem Lara guiando o jogador, história de introdução e falas do Lara dando instruções ao jogador. 
+Elementos de pontuação e feedback: Combos de acerto consecutivo, placar local, animações de estrela aparecendo na tela final e frases personalizadas do Lara de acordo com a pontuação. 
+Elementos técnicos internos: Gerenciador de áudio, gerenciador de cena, sistema de carregamento e controle de FPS.
+Elementos de receita: Destaque do passo atual da receita e card visual da receita.
+Elementos de ambiente: Objetos decorativos no fundo, sombras para distinguir os itens clicáveis com os de decoração, mudança de fundo de acordo com cada etapa. 
+
+
+
+
+
+Controles previstos:
+É previsto que o controle do jogo apenas com o mouse e seu cursor, seja suficiente para conseguir jogar e participar da experiência do Bolo do Lara.
+
+Estruturas de dados que poderão ser utilizadas:
+Lista, dicionário, tupla e classe.
+
+Uso previsto de arquivos:
+.png, .mp3/.wav, .json e .ttf.
+
+Testes planejados:
+Teste de clique nos ingredientes: verificar se o clique do mouse está sendo detectado corretamente na área do ingrediente certo e do ingrediente errado, confirmando o desconto de pontos no caso de erro.
+Teste de ordem das etapas: verificar se o jogo impede o jogador de avançar para a próxima etapa sem ter concluído a anterior.
+Teste de bloqueio de elementos: confirmar que elementos não desbloqueados não respondem à interação do jogador.
+Teste do sistema de pontuação: validar se os pontos são somados corretamente a cada acerto e descontados a cada erro, e se as estrelas finais refletem a porcentagem correta.
+Teste de limite de tentativas: verificar se, após atingir o número máximo de erros em uma etapa, o jogador recebe a pontuação mínima daquela fase.
+Teste de troca de cena/etapa: validar se o gerenciador de cena transita corretamente entre as 4 etapas e se o fundo muda conforme esperado.
+Teste de encerramento: verificar se, ao concluir a última etapa, a tela final exibe corretamente a pontuação, as estrelas e a frase personalizada do Lara.
+Teste de pausa: confirmar se o botão de pause interrompe o jogo sem perder o estado atual.
+
+Principais dificuldades esperadas:
+Tendo em vista os conteúdos aprendidos até o presente momento, nosso grupo tende a ter dificuldades com o design e a organização de uma interface. Além disso, uma dificuldade encontrada é a inexperiência na programação principalmente com jogos, o que torna difícil a elaboração de certas partes do código, porém acreditamos que com as fontes certas e uma boa orientação a dificuldade seja reduzida.
+
+
+
+
+
+Escopo mínimo para a entrega final: 
+Tela inicial com botão de início e tela de "como jogar".
+Pelo menos 2 das 4 etapas funcionais (ex: selecionar ingredientes e misturar).
+Sistema de clique nos ingredientes com validação de certo/errado.
+Sistema de pontuação básico com desconto por erro e exibição de estrelas na tela final.
+Bloqueio de elementos que ainda não podem ser usados.
+Tela final com pontuação, estrelas e frase da Lara.
+Carregamento de assets via arquivos .png e .mp3/.wav.
+Controle exclusivo pelo mouse funcionando em todas as interações.
